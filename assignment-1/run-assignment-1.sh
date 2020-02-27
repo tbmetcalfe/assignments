@@ -114,7 +114,12 @@ provision_localstack
 deploy_terraform_infra
 run_random_streamer
 
+if [ ! -f outputs ]; then
+  echo "Removing terraform.tfstate"
+  mkdir ${DIR}/outputs
+fi
+
 echo "Getting and showing data sent to S3 bucket"
 aws --endpoint-url http://localhost:4572 s3 sync s3://$(get_terraform_output bucket_name) ${DIR}/outputs/.
 
-#docker kill localstack_main
+docker kill localstack_main
