@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: A sample template
 Parameters:
   ASGSize:
-    Default: 1
+    Default: 10
     Description: Size of Autoscaling Group
     Type: Number
   ASGName:
