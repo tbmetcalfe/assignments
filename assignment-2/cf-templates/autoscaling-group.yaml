@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: A sample template
+Parameters:
+  ASGSize:
+    Default: 1
+    Description: Size of Autoscaling Group
+    Type: Number
+  ASGName:
+    Description: Name of Autoscaling Group
+    Type: String
+    Default: tristan-test
+Resources:
+  ASGVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: "10.0.0.0/24"
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+  ASGSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      #AssignIpv6AddressOnCreation: False
+      AvailabilityZone: !Join
+        - ''
+        - - !Ref 'AWS::Region'
+          - "a"
+      CidrBlock: "10.0.0.0/24"
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref ASGVPC
+
+  ASGLaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: ami-099a8245f5daa82bf # eu-west-1 Amazon Linux AMI
+      InstanceType: t2.micro
+      LaunchConfigurationName: "ASGLaunchConfig"
+
+  ASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Ref ASGName
+      AvailabilityZones:
+        - !Join
+          - ''
+          - - !Ref 'AWS::Region'
+            - "a"
+      Cooldown: "30"
+      DesiredCapacity: !Ref ASGSize
+      HealthCheckGracePeriod: 30
+      LaunchConfigurationName: !Ref ASGLaunchConfiguration
+      MaxSize: !Ref ASGSize
+      MinSize: !Ref ASGSize
