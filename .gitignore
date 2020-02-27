@@ -1,0 +1,6 @@
+*.terraform
+*.terraform/*
+
+*/terraform.tfstate*
+
+assignment-1/outputs/*
