@@ -63,4 +63,4 @@ aws cloudformation wait stack-create-complete --stack-name ${STACK_NAME}
 
 docker run -it --network="host" -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" $(build_docker_image) --asg-name ${ASG_NAME} --region ${REGION}
 
-#aws cloudformation delete-stack --stack-name ${STACK_NAME}
+aws cloudformation delete-stack --stack-name ${STACK_NAME}

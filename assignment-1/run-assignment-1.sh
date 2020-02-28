@@ -83,7 +83,7 @@ function get_terraform_output {
 function run_random_streamer {
   echo "Building docker image"
   KINESIS_STREAM=$(get_terraform_output kinesis_stream_name)
-  docker run --network="host" $(build_docker_image) --kinesis-stream ${KINESIS_STREAM} --region ${REGION}
+  docker run -it --network="host" $(build_docker_image) --kinesis-stream ${KINESIS_STREAM} --region ${REGION}
 }
 
 function provision_localstack {
@@ -106,8 +106,6 @@ function provision_localstack {
 
   sleep 10; # just a little extra time for localstack
 }
-
-
 
 check_args
 provision_localstack
